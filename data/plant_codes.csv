@@ -1,0 +1,6 @@
+﻿monocot_dicot_unknown_code,transplant_info,date_code_assigned,species_assignment,species_code,nativeness,monocot_dicot,endangered_status,ave_seed_mass_g_per_thousand_seeds,seed_appendage,ID_notes
+D1,t1_3,4/22/25,Veronica verna,VEVE,N,d,n,0.075,n,
+D2,t2_10,4/22/25,Draba verna,DRVE,N,d,n,0.03,n,
+D3,c1_1,5/6/25,Oxalis sp.,OXSP,NN,d,n,,,greenhouse weed
+M1,t1_3,4/22/25,Bromus tectorum,BRTE,NN,m,n,3,y,
+M2,t1_4,5/13/25,Poa secunda,POSE,N,m,n,0.1,n,

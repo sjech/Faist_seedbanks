@@ -1,0 +1,22 @@
+sample_ID,code,m_d,treatment,seedCount,species_assignment,species_code,ave_seed_mass_g_per_thousand_seeds,seed_appendage,seeds_m3
+cc_1,D3,D,cc,1,Oxalis sp.,OXSP,NA,,NA
+cc_2,D3,D,cc,2,Oxalis sp.,OXSP,NA,,NA
+t1_1,M1,M,t1,1,Bromus tectorum,BRTE,3,y,250.73363431151245
+t1_1,M2,M,t1,10,Poa secunda,POSE,0.1,n,2507.3363431151247
+t1_2,M1,M,t1,4,Bromus tectorum,BRTE,3,y,984.8739495798319
+t1_3,D1,D,t1,2,Veronica verna,VEVE,0.075,n,540.1737242128121
+t1_3,M1,M,t1,6,Bromus tectorum,BRTE,3,y,1620.5211726384364
+t1_4,M1,M,t1,3,Bromus tectorum,BRTE,3,y,721.2637913741223
+t1_5,D1,D,t1,2,Veronica verna,VEVE,0.075,n,441.2155745489079
+t1_5,M2,M,t1,1,Poa secunda,POSE,0.1,n,220.60778727445395
+t2_1,M2,M,t2,1,Poa secunda,POSE,0.1,n,201.06100795755967
+t2_2,M1,M,t2,2,Bromus tectorum,BRTE,3,y,911.530815109344
+t2_2,M2,M,t2,1,Poa secunda,POSE,0.1,n,455.765407554672
+t2_3,D1,D,t2,3,Veronica verna,VEVE,0.075,n,506.1627906976743
+t2_3,M1,M,t2,1,Bromus tectorum,BRTE,3,y,168.72093023255812
+t2_3,M2,M,t2,5,Poa secunda,POSE,0.1,n,843.6046511627906
+t2_4,D1,D,t2,2,Veronica verna,VEVE,0.075,n,444.00684931506845
+t2_4,D2,D,t2,2,Draba verna,DRVE,0.03,n,444.00684931506845
+t2_4,M2,M,t2,1,Poa secunda,POSE,0.1,n,222.00342465753423
+t2_5,D2,D,t2,5,Draba verna,DRVE,0.03,n,1162.4809741248096
+t2_5,M1,M,t2,4,Bromus tectorum,BRTE,3,y,929.9847792998477

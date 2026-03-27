@@ -1,0 +1,13 @@
+﻿site,replicate,sample_ID,collection_date,vernalization_period,field_corer_depth_sampled_cm,field_corer_area_sampled_cm2,total_sample_weight_g,sample_prep_date_sieved,sample_prep_post_sieve_weight_g,sample_prep_post_sieve_volume_mL,greenhouse_pot_number,greenhouse_germination_subsample_weight_g,grenhouse_substrate_volume_mL,date_sample_added_to_substrate_in_greenhouse_trial,Notes
+treatment1,1,t1_1,3/1/25,4C for 4 weeks in greenhouse fridge,2,200,444.3,4/1/25,349,405,1,88.6,350,4/15/25,
+treatment1,2,t1_2,3/1/25,4C for 4 weeks in greenhouse fridge,2,200,468.8,4/1/25,414.1,380,2,95.2,350,4/15/25,
+treatment1,3,t1_3,3/1/25,4C for 4 weeks in greenhouse fridge,2,200,497.5,4/1/25,436.2,390,3,92.1,350,4/15/25,
+treatment1,4,t1_4,3/1/25,4C for 4 weeks in greenhouse fridge,2,200,479.4,4/1/25,421.7,375,4,99.7,350,4/15/25,
+treatment1,5,t1_5,3/1/25,4C for 4 weeks in greenhouse fridge,2,200,464.6,4/1/25,301.6,360,5,105.3,350,4/15/25,
+treatment2,1,t2_1,3/1/25,4C for 4 weeks in greenhouse fridge,2,200,303.2,4/1/25,168.1,265,6,75.4,350,4/15/25,
+treatment2,2,t2_2,3/1/25,4C for 4 weeks in greenhouse fridge,2,200,458.5,4/1/25,319.1,510,7,50.3,350,4/15/25,
+treatment2,3,t2_3,3/1/25,4C for 4 weeks in greenhouse fridge,2,200,290.2,4/1/25,227.3,410,8,86,350,4/15/25,
+treatment2,4,t2_4,3/1/25,4C for 4 weeks in greenhouse fridge,2,200,259.3,4/1/25,207.5,520,9,58.4,350,4/15/25,
+treatment2,5,t2_5,3/1/25,4C for 4 weeks in greenhouse fridge,2,200,305.5,4/1/25,263.3,510,10,65.7,350,4/15/25,
+control1,1,cc_1,,,,,,,,,11,,350,4/15/25,
+control2,2,cc_2,,,,,,,,,12,,350,4/15/25,
