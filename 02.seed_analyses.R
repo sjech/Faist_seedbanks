@@ -46,6 +46,50 @@ plot(totalseed.lm) # determine if a regular linear model is ok for your data
 # model interpretation: the intercept is positive and significant (p < 0.004) which just means that both treatments have positive averages (non-zero). Treatment 1 is not different from treatment 2 (F = 0.1447, df = 1 and 8, p = 0.71, adj. R2 = -0.105).
 
 
+# GLMM (counts) would be best = count data, non-negative integers, often skewed
+# first option is a poisson distribution but this may not work great if there is overdispersion 
+m1 <- glmer(
+  abundance ~ treatment + (1 | block),
+  family = poisson,
+  data = df
+)
+
+# another option is negative binomial 
+m2 <- glmmTMB(
+  abundance ~ treatment + (1 | block),
+  family = nbinom2,
+  data = df
+)
+
+# if you need a zero-inflated model
+m3 <- glmmTMB(
+  abundance ~ treatment + (1 | block),
+  ziformula = ~1,
+  family = nbinom2,
+  data = df
+)
+
+# if the samples differ in soil volume or area, you should account for this with an offset in your model
+m4 <- glmmTMB(
+  abundance ~ treatment + offset(log(area_m2)) + (1 | block),
+  family = nbinom2,
+  data = df
+)
+
+# how to adjust the output so that it is biologically relevent (1.0 = no effect, 1.5 = 50% higher emergence, 0.7 = 30% lower emergence)
+exp(fixef(m2)$cond)
+
+
+
+
+
+
+
+
+
+
+
+
 # Monocot Seed Counts
 # for this, we care about only the monocots, so we will filter for that data and then run the same visualization and analysis
 monocot_summary <- seedsummary %>%
