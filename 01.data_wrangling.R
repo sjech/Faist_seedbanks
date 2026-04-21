@@ -3,7 +3,7 @@
 # Date: March 2026
 # Co-authors: Akasha Faist, Madeline Mayorga
 # version: 1
-# Purpose: This code was created to analyze data associated with seed bank studies that follow the Faist Lab protocols. To use the code, you must use the associated data entry files so that the data format matches this code. This script will read in the metadata file, removal file, weekly pinning file, and plant codes file to wrangle the data into machine-readable formats. Adjustments may need to be made based on your specific project. The code will output files for data analysis (total seed counts, monocot counts, dicot counts, native v. non-native seeds, patterns between treatments and seed traits)
+# Purpose: This code was created to analyze data associated with seed bank studies that follow the Faist Lab protocols. To use the code, you must use the associated data entry files so that the data format matches this code. This script will read in the metadata file, removal file, weekly pinning file, and plant codes file to wrangle the data into machine-readable formats. Adjustments may need to be made based on your specific project. The code will output files for data analysis (total seed counts, monocot counts, dicot counts, perennial v. annual, native v. non-native seeds, patterns between treatments and seed traits)
 
 # Load Libraries
 library(tidyverse)
@@ -27,7 +27,7 @@ seed_summary <- seeds %>%
   summarise(seedCount = sum(count))
 
 # merge the plant information onto this
-species_subset <- species %>% select(monocot_dicot_unknown_code, species_assignment, species_code, ave_seed_mass_g_per_thousand_seeds, seed_appendage)
+species_subset <- species %>% select(monocot_dicot_unknown_code, species_assignment, species_code, lifespan, ave_seed_mass_g_per_thousand_seeds, seed_appendage) # choose the columns that you want
 
 seed_summary_species <- left_join(seed_summary, species_subset, by = c("code" = "monocot_dicot_unknown_code"))
 
@@ -52,6 +52,6 @@ seed_summary_species_merge2 <- seed_summary_species_merge %>%
 # you might have additional columns in your metadata or species data to address your research questions. You might also have additional treatment levels that should not be lost. Modify the code above as needed to generate your data table for analysis. 
 
 # export
-write_csv(seed_summary_species_merge2, "output/species_summary_table.csv")
+#write_csv(seed_summary_species_merge2, "output/species_summary_table.csv")
 
 

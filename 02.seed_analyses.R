@@ -9,7 +9,8 @@
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
-#library(lme4)
+library(lme4)
+library(glmmTMB)
 
 # Load the data
 seedsummary <- read.csv("output/species_summary_table.csv")
@@ -20,7 +21,7 @@ seedsummary <- read.csv("output/species_summary_table.csv")
 
 sample_summary <- seedsummary %>%
   group_by(sample_ID, treatment) %>%
-  summarise(totalSeeds_m3 = sum(seeds_m3))
+  summarise(totalSeeds_m3 = round(sum(seeds_m3)))
 
 # visualization
 sample_summary %>%
@@ -48,48 +49,21 @@ plot(totalseed.lm) # determine if a regular linear model is ok for your data
 
 # GLMM (counts) would be best = count data, non-negative integers, often skewed
 # first option is a poisson distribution but this may not work great if there is overdispersion 
-m1 <- glmer(
-  abundance ~ treatment + (1 | block),
+m1 <- glm(
+  totalSeeds_m3 ~ treatment,
   family = poisson,
-  data = df
+  data = sample_summary_noControls
 )
+summary(m1)
+# consider the DHARMa package for model diagnostics
+
 
 # another option is negative binomial 
-m2 <- glmmTMB(
-  abundance ~ treatment + (1 | block),
-  family = nbinom2,
-  data = df
-)
-
-# if you need a zero-inflated model
-m3 <- glmmTMB(
-  abundance ~ treatment + (1 | block),
-  ziformula = ~1,
-  family = nbinom2,
-  data = df
-)
-
+# another option is a zero-inflated model
 # if the samples differ in soil volume or area, you should account for this with an offset in your model
-m4 <- glmmTMB(
-  abundance ~ treatment + offset(log(area_m2)) + (1 | block),
-  family = nbinom2,
-  data = df
-)
-
-# how to adjust the output so that it is biologically relevent (1.0 = no effect, 1.5 = 50% higher emergence, 0.7 = 30% lower emergence)
-exp(fixef(m2)$cond)
 
 
-
-
-
-
-
-
-
-
-
-
+######################
 # Monocot Seed Counts
 # for this, we care about only the monocots, so we will filter for that data and then run the same visualization and analysis
 monocot_summary <- seedsummary %>%
@@ -114,6 +88,7 @@ summary(monocotseed.lm)
 plot(monocotseed.lm) # determine if a regular linear model is ok for your data 
 # if you have random effects to include in the model, use the 'lme4' package and the function lmer()
 # model interpretation: the intercept is positive and significant (p < 0.007) which just means that both treatments have positive averages (non-zero). Treatment 1 is not different from treatment 2 (F = 1.084, df = 1 and 8, p = 0.33, adj. R2 = 0.009).
+# consider other models as listed above based on your data
 
 
 
@@ -140,9 +115,11 @@ dicotseed.lm <- lm(totalSeeds_m3 ~ treatment, data = dicot_summary)
 summary(dicotseed.lm)
 plot(dicotseed.lm) # determine if a regular linear model is ok for your data 
 # if you have random effects to include in the model, use the 'lme4' package and the function lmer()
-# model interpretation: the intercept is positive but not significant (p =0.08) which means that the average number of dicots in the soil is not significantly different from zero. Treatment 1 is not different from treatment 2 (F = 2.1, df = 1 and 3, p = 0.24, adj. R2 = 0.22).
+# consider the other model options listed above based on your data
 
 
+
+#########################
 # Seed appendage - does a seed appendage affect germination rates in treatment 1 vs. treatment 2 differently?
 # for this, we will sort the species into yes seed appendage or no seed appendage categories and then run treatment level analyses. you could do something similar for plant nativeness, invasiveness, or other important characteristics
 
@@ -156,10 +133,9 @@ appendage_summary <- seedsummary %>%
 appendage_summary %>%
   ggplot(aes(x = treatment, y = totalSeeds_m3, fill = seed_appendage)) +
   geom_boxplot(position = position_dodge(width = 0.8)) +
-  geom_jitter(aes(color = seed_appendage),
+  geom_jitter(aes(fill = seed_appendage), shape = 21, color = "black",
               position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.8)) +
   theme_classic()
-
 
 # statistical analysis 
 # is there a difference in the total number of germinated seeds that had an appendage or not for the two treatments?
@@ -171,6 +147,8 @@ plot(appendage.lm) # determine if a regular linear model is ok for your data
 # model interpretation: the intercept is positive (non-zero). Treatment 1 is not different from treatment 2. And seed appendage was not different.
 
 
+
+######################
 # Species - for an individual species, are there treatment differences?
 # Try BRTE (cheatgrass)
 brte_summary <- seedsummary %>%
@@ -198,6 +176,8 @@ plot(brte.lm) # determine if a regular linear model is ok for your data
 # model interpretation: cheatgrass germinated and has a positive (non-zero) average. It is present. Treatment 1 is not different from treatment 2 (F=0.32, df = 1 and 5, p = 0.6, adj. R2 = -0.13)
 
 
+
+########################
 ### All species at once
 # Species - for an individual species, are there treatment differences?
 # Try BRTE (cheatgrass)
@@ -223,6 +203,7 @@ species.lm <- lm(totalSeeds_m3 ~ treatment+species_code, data = species_summary)
 summary(species.lm)
 plot(species.lm) # determine if a regular linear model is ok for your data 
 # if you have random effects to include in the model, use the 'lme4' package and the function lmer()
+# you could consider an interactive effect between treatment and species here as well
 # model interpretation: there are seedlings in the pot (positive and significant intercept). There are no differences in treatment 1 or 2 and no differences by species
 
 # From here, you could go into community composition analyses (PCA or PCoA) to deal with multi-dimensional data

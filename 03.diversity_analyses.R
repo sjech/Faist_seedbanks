@@ -19,7 +19,7 @@ library(betareg) # for assessing Simpson's metrics, use instead of linear model
 # Load the data
 seedsummary <- read.csv("output/species_summary_table.csv")
 
-# Richness - number of different species in the samples. keep the replicates separate so that we can then get an average richness value
+# Richness - number of different species in the samples. Keep the replicates separate so that we can then get an average richness value
 richness <- seedsummary %>%
   filter(!treatment %in% c("cc")) %>%
   group_by(sample_ID, treatment) %>%
@@ -28,6 +28,7 @@ richness <- seedsummary %>%
 # use the new spreadsheet for statistical analyses
 richness.lm <- lm(richness ~ treatment, data = richness)
 summary(richness.lm)
+# include model diagnostics!
 
 # visualize the data - basic plot
 richness %>%
@@ -75,7 +76,7 @@ seed_diversity %>%
 shannon.lm <- lm(H ~ treatment, data = seed_diversity)
 summary(shannon.lm)
 plot(shannon.lm)
-
+# include model diagnostics!
 
 # Simpson's
 seed_diversity %>% 
@@ -90,6 +91,8 @@ seed_diversity$simp.adj <- (seed_diversity$simp * (nrow(seed_diversity) - 1) + 0
 simp.betareg <- betareg(simp.adj ~ treatment, data = seed_diversity)
 summary(simp.betareg) # Positive estimate → higher diversity in that treatment
 plot(residuals(simp.betareg))
+# include additional model diagnostics!
+
 
 
 # Evenness = dominance patterns 
@@ -103,12 +106,12 @@ seed_diversity %>%
   theme_classic()
 
 # beta regression for evenness
-# I think it is also calulcated between 0-1 so use beta regression instead of linear model
+# I think it is also calculated between 0-1 so use beta regression instead of linear model
 evenness.betareg <- betareg(J ~ treatment, data = seed_diversity)
 summary(evenness.betareg) # Positive estimate → higher diversity in that treatment
 plot(residuals(evenness.betareg))
 # not significantly different, so the two treatments are even
-
+# include additional model diagnostics!
 
 # Before finishing, save the species matrix to address community composition with ordination
 write.csv(seeds_wide, "output/species_matrix.csv", row.names = FALSE)
